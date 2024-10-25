@@ -17,7 +17,7 @@ function Projectile:new(x, y, angle)
     self.x = x
     self.y = y
     self.angle = angle
-    local spd = rotatePoint(0,0,self.angle,0,1)
+    local spd = rotatePoint(0,0,self.angle,0,-1)
     self.xspd = spd[1] * 1
     self.yspd = spd[2] * 1
 end
@@ -25,16 +25,19 @@ end
 
 BasicLaser = Projectile:extend()
 
+BasicLaser.shape = {0,0,0,4}
+
 function BasicLaser:new(x,y,angle)
     BasicLaser.super.new(self,x,y,angle)
 end
 
 function BasicLaser:update()
-    self.x = self.x - self.xspd
-    self.y = self.y - self.yspd
+    self.x = self.x + self.xspd
+    self.y = self.y + self.yspd
 end
 
 function BasicLaser:draw()
+    
     love.graphics.setColor(1,1,1,1)
-    love.graphics.circle("fill",self.x,self.y,2)
+    love.graphics.line(CalculateShapePos(self))
 end

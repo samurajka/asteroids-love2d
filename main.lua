@@ -8,6 +8,7 @@ require "code.renderer"
 require "code.classes.player"
 require "code.classes.enemy"
 require "code.classes.projectiles"
+require "code.classes.asteroid"
 
 
 x = x or 0
@@ -34,6 +35,11 @@ function love.load()
     print(newpoint[1])
     print(newpoint[2])
 
+
+    table.insert(AsteroidTable,Asteroid(100,100,generateAsteroidShape()))
+    table.insert(AsteroidTable,Asteroid(100,150,generateAsteroidShape()))
+    table.insert(AsteroidTable,Asteroid(150,100,generateAsteroidShape()))
+
 end
 
 function love.update(dt)
@@ -42,6 +48,7 @@ function love.update(dt)
     p:update()
     
     updateTableObjects(ProjectileTable)
+    updateTableObjects(AsteroidTable)
 
 end
 
@@ -55,6 +62,7 @@ function love.draw()
         e:draw()
         
         drawTableObjects(ProjectileTable)
+        drawTableObjects(AsteroidTable)
 
     love.graphics.setCanvas()
 

@@ -11,6 +11,11 @@ Player.yspd = 0
 Player.accel = 0.01
 Player.maxspd = 1
 
+Player.weapon = {
+    ready = 0,
+    cooldown = 50
+}
+
 function Player:new()
     
 end
@@ -38,7 +43,7 @@ function Player:movement()
     end
     
     if KEY_W then
-        local spdToAdd = rotatePoint(0,0,self.angle,0,1)
+        local spdToAdd = rotatePoint(0,0,self.angle,0,-1)
         self.xspd = self.xspd + (spdToAdd[1] * self.accel)
         self.yspd = self.yspd + (spdToAdd[2] * self.accel)
     end
@@ -57,14 +62,19 @@ function Player:movement()
     end
 
 
-    self.x = self.x - self.xspd
-    self.y = self.y - self.yspd
+    self.x = self.x + self.xspd
+    self.y = self.y + self.yspd
 end
 
 function Player:shoot()
-    if KEY_K then
+    if KEY_K and self.weapon.ready==0 then
         local newProjectile = BasicLaser(self.x,self.y,self.angle)
         table.insert(ProjectileTable, newProjectile)
+        self.weapon.ready = self.weapon.ready - self.weapon.cooldown
+    end
+
+    if self.weapon.ready < 0 then
+        self.weapon.ready = self.weapon.ready + 1
     end
 end
 
