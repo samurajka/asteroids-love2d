@@ -11,7 +11,8 @@ require "code.classes.projectiles"
 require "code.classes.asteroid"
 
 
-x = x or 0
+DEBUGMODE = true
+debugtimer = 0
 
 function love.load()
     love.window.setMode(gw*4, gh*4, {display = 1, fullscreen = false, borderless = false})
@@ -27,7 +28,7 @@ function love.load()
 
     
     p = Player()
-    e = Enemy()
+
 
 
     newpoint = rotatePoint(0,0,45,1,0)
@@ -36,9 +37,13 @@ function love.load()
     print(newpoint[2])
 
 
-    table.insert(AsteroidTable,Asteroid(100,100,generateAsteroidShape()))
-    table.insert(AsteroidTable,Asteroid(100,150,generateAsteroidShape()))
+    table.insert(AsteroidTable,Asteroid(100,100,generateAsteroidShape(3,5,0)))
+    table.insert(AsteroidTable,Asteroid(100,150,generateAsteroidShape(40,20,3)))
     table.insert(AsteroidTable,Asteroid(150,100,generateAsteroidShape()))
+
+    newAsteroid(3,200,200)
+    newAsteroid(2,200,200)
+    newAsteroid(1,200,200)
 
 end
 
@@ -47,8 +52,24 @@ function love.update(dt)
 
     p:update()
     
+    debugtimer = debugtimer + 1/60
+
     updateTableObjects(ProjectileTable)
     updateTableObjects(AsteroidTable)
+
+
+    for i, v in ipairs(AsteroidTable) do
+        for j, w in ipairs(ProjectileTable) do
+            if collisionDetection(v,w) then
+                print("hit")
+                table.remove(AsteroidTable,i)
+                table.remove(ProjectileTable,j)
+            end
+        end
+        
+    end
+
+
 
 end
 
@@ -59,7 +80,7 @@ function love.draw()
         
         
         p:draw()
-        e:draw()
+
         
         drawTableObjects(ProjectileTable)
         drawTableObjects(AsteroidTable)
@@ -69,5 +90,9 @@ function love.draw()
     love.graphics.clear()
     love.graphics.setColor(1,1,1,1)
     love.graphics.draw(canvas,0,0,0,4)
+
+
+    if DEBUGMODE then print("Fps: " .. tostring(love.timer.getFPS())) end
+    if DEBUGMODE then print(debugtimer) end
 
 end

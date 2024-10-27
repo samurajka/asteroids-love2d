@@ -5,17 +5,20 @@ Asteroid.y = 0
 Asteroid.xspd = 0
 Asteroid.yspd = 0
 Asteroid.angle = 0
+Asteroid.lifetime = 1
+Asteroid.collisionSize = 0
 
 Asteroid.shape = {}
 
 AsteroidTable = {}
 
 
-function Asteroid:new(x,y,shape,angle)
+function Asteroid:new(x,y,shape,angle,collision)
     self.x = x
     self.y = y
     self.angle = angle or love.math.random(0,360)
     self.shape = shape
+    self.collisionSize = collision or 3
     local spd = rotatePoint(0,0,self.angle,0,-1)
     self.xspd = spd[1] * 0.1
     self.yspd = spd[2] * 0.1
@@ -27,6 +30,7 @@ function Asteroid:update()
 end
 
 function Asteroid:draw()
+    love.graphics.setColor(1,0.5,0,1)
     local finalShape = CalculateShapePos(self)
     love.graphics.polygon("line",finalShape)
 end
@@ -52,3 +56,10 @@ function generateAsteroidShape(numOfVertices,radius,roughness)
 
     return result
 end
+
+function newAsteroid(lifetime, cordx, cordy)
+    local shape = generateAsteroidShape(lifetime*5,lifetime*5,lifetime*2-1)
+    local asteroid = Asteroid(cordx,cordy,shape,love.math.random(0,360), lifetime*7)
+    table.insert(AsteroidTable,asteroid)
+end
+    

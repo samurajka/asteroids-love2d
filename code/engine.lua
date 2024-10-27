@@ -57,3 +57,7 @@ function updateTableObjects(table)
         table[i]:update()
     end
 end
+
+function collisionDetection(object1, object2)
+    if (object2.x - object1.x)^2 + (object2.y - object1.y)^2 <= (object1.collisionSize + object2.collisionSize)^2 then return true else return false end
+end

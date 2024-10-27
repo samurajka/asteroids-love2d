@@ -4,6 +4,7 @@ Player.x = 50
 Player.y = 50
 Player.angle = 25
 Player.shape = {0,-15,9,6,-9,6}
+Player.collisionSize = 1
 
 Player.xspd = 0
 Player.yspd = 0
@@ -23,7 +24,7 @@ end
 function Player:update()
    Player:movement() 
    Player:shoot()
-   Player:printDebug()
+   if DEBUGMODE then Player:printDebug() end
 end
 
 function Player:draw()

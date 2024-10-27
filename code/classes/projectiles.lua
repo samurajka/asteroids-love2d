@@ -5,6 +5,7 @@ Projectile.y = 0
 Projectile.xspd = 0
 Projectile.yspd = 0
 Projectile.angle = 0
+Projectile.collisionSize = 2
 
 --this table will store all projectile object
 ProjectileTable = {}
