@@ -15,7 +15,8 @@ function checkAsteroidProjectileCollisions()
                     newAsteroid(v.lifetime-1,v.x+love.math.random(-2,2),v.y+love.math.random(-2,2))
                     newAsteroid(v.lifetime-1,v.x+love.math.random(-2,2),v.y+love.math.random(-2,2))
                 end
-
+                
+                Counter.addScore(mainCounter,50+v.lifetime*50)
                 table.remove(AsteroidTable,i)                
             end
         end

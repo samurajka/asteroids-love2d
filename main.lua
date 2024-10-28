@@ -10,7 +10,7 @@ require "code.classes.player"
 require "code.classes.enemy"
 require "code.classes.projectiles"
 require "code.classes.asteroid"
-
+require "code.classes.counter"
 
 DEBUGMODE = true
 debugtimer = 0
@@ -20,17 +20,24 @@ function love.load()
 
     love.graphics.setDefaultFilter("nearest")
 
-    love.graphics.setBlendMode("none")
+    love.graphics.setBlendMode("alpha")
 
     love.graphics.setLineWidth(1)
     love.graphics.setLineStyle("rough")
 
     canvas = love.graphics.newCanvas(480,270)
 
-    
+
+    fontSize = 20
+    pixelFont = love.graphics.newFont(fontSize,"mono")
+    pixelFont:setFilter("nearest")
+    love.graphics.setFont(pixelFont)
+
+
+
     p = Player()
 
-
+    mainCounter = Counter()
 
 
     newAsteroid(3,200,200)
@@ -51,6 +58,7 @@ function love.update(dt)
     updateTableObjects(ProjectileTable)
     updateTableObjects(AsteroidTable)
 
+    mainCounter:update()
 
     gameloopUpdate()
 
@@ -63,11 +71,12 @@ function love.draw()
     love.graphics.setCanvas(canvas)
         love.graphics.clear()
         
+        mainCounter:draw()     
         
         p:draw()
 
+           
 
-        
         drawTableObjects(ProjectileTable)
         drawTableObjects(AsteroidTable)
 
@@ -76,6 +85,9 @@ function love.draw()
     love.graphics.clear()
     love.graphics.setColor(1,1,1,1)
     love.graphics.draw(canvas,0,0,0,4)
+
+
+    
 
 
     if DEBUGMODE then print("Fps: " .. tostring(love.timer.getFPS())) end
