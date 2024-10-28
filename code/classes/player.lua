@@ -25,6 +25,8 @@ function Player:update()
    Player:movement() 
    Player:shoot()
    if DEBUGMODE then Player:printDebug() end
+    teleportOffscreenObject(Player)
+
 end
 
 function Player:draw()

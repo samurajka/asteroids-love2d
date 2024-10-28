@@ -27,6 +27,7 @@ end
 function Asteroid:update()
     self.x = self.x + self.xspd
     self.y = self.y + self.yspd
+    teleportOffscreenObject(self)
 end
 
 function Asteroid:draw()
@@ -60,6 +61,7 @@ end
 function newAsteroid(lifetime, cordx, cordy)
     local shape = generateAsteroidShape(lifetime*5,lifetime*5,lifetime*2-1)
     local asteroid = Asteroid(cordx,cordy,shape,love.math.random(0,360), lifetime*7)
+    asteroid.lifetime = lifetime
     table.insert(AsteroidTable,asteroid)
 end
     

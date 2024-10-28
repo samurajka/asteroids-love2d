@@ -2,6 +2,7 @@ Object = require "libraries.classic.classic"
 
 require "code.engine"
 require "code.renderer"
+require "code.gameloop"
 
 
 
@@ -31,15 +32,6 @@ function love.load()
 
 
 
-    newpoint = rotatePoint(0,0,45,1,0)
-
-    print(newpoint[1])
-    print(newpoint[2])
-
-
-    table.insert(AsteroidTable,Asteroid(100,100,generateAsteroidShape(3,5,0)))
-    table.insert(AsteroidTable,Asteroid(100,150,generateAsteroidShape(40,20,3)))
-    table.insert(AsteroidTable,Asteroid(150,100,generateAsteroidShape()))
 
     newAsteroid(3,200,200)
     newAsteroid(2,200,200)
@@ -52,22 +44,15 @@ function love.update(dt)
 
     p:update()
     
+
+
     debugtimer = debugtimer + 1/60
 
     updateTableObjects(ProjectileTable)
     updateTableObjects(AsteroidTable)
 
 
-    for i, v in ipairs(AsteroidTable) do
-        for j, w in ipairs(ProjectileTable) do
-            if collisionDetection(v,w) then
-                print("hit")
-                table.remove(AsteroidTable,i)
-                table.remove(ProjectileTable,j)
-            end
-        end
-        
-    end
+    gameloopUpdate()
 
 
 
@@ -80,6 +65,7 @@ function love.draw()
         
         
         p:draw()
+
 
         
         drawTableObjects(ProjectileTable)
