@@ -28,5 +28,29 @@ end
 
 
 function gameloopUpdate()
+    checkInputs()
+
+    p:update()
+    
+
+    if ObjectXTableCollision(p,AsteroidTable) and Player.invul == 0 then
+        p.invul = 120
+        p.hp = p.hp - 1
+        
+        if p.hp == 0 then GAMESTATE = "GAMEOVER" end
+    end
+
+
+    debugtimer = debugtimer + 1/60
+
+    updateTableObjects(ProjectileTable)
+    updateTableObjects(AsteroidTable)
+    updateTableObjects(WormholeTable)
+
+    checkLifetime(WormholeTable)
+
+    ticker1:update()
+
+    mainCounter:update()
     checkAsteroidProjectileCollisions()
 end

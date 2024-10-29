@@ -62,6 +62,14 @@ function collisionDetection(object1, object2)
     if (object2.x - object1.x)^2 + (object2.y - object1.y)^2 <= (object1.collisionSize + object2.collisionSize)^2 then return true else return false end
 end
 
+function ObjectXTableCollision(object, tb)
+    for index, value in ipairs(tb) do
+        if collisionDetection(object,value) then return true end
+    end
+    return false
+end
+
+
 
 --  returns a table with .x and .y
 --  these values can be

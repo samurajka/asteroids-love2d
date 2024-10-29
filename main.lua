@@ -16,7 +16,7 @@ require "code.classes.wormhole"
 DEBUGMODE = true
 debugtimer = 0
 
-
+GAMESTATE = "GAMERUNNING"
 
 
 
@@ -62,31 +62,32 @@ function love.load()
 end
 
 function love.update(dt)
-    checkInputs()
 
-    p:update()
+    if GAMESTATE == "GAMERUNNING" then
+        gameloopUpdate()
+    end
+
+    if GAMESTATE == "GAMEOVER" then
+        
+    end
+
     
 
-
-    debugtimer = debugtimer + 1/60
-
-    updateTableObjects(ProjectileTable)
-    updateTableObjects(AsteroidTable)
-    updateTableObjects(WormholeTable)
-
-    checkLifetime(WormholeTable)
-
-    ticker1:update()
-
-    mainCounter:update()
-
-    gameloopUpdate()
+    
 
 
 
 end
 
 function love.draw()
+
+    if GAMESTATE == "GAMERUNNING" then
+        
+    end
+
+    if GAMESTATE == "GAMEOVER" then
+        
+    end
     
     love.graphics.setCanvas(canvas)
         love.graphics.clear()

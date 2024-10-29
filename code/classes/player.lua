@@ -9,8 +9,12 @@ Player.collisionSize = 1
 Player.xspd = 0
 Player.yspd = 0
 
-Player.accel = 0.01
+Player.accel = 0.03
 Player.maxspd = 1
+Player.rotationSpeed = 2
+
+Player.hp = 3
+Player.invul = 0
 
 Player.weapon = {
     ready = 0,
@@ -24,7 +28,10 @@ end
 function Player:update()
    Player:movement() 
    Player:shoot()
-   if DEBUGMODE then Player:printDebug() end
+   if Player.invul ~= 0 then Player.invul = Player.invul - 1 end
+   if DEBUGMODE then 
+        Player:printDebug() 
+   end
     teleportOffscreenObject(Player)
 
 end
@@ -38,11 +45,11 @@ end
 
 function Player:movement()
     if KEY_A then
-        self.angle = self.angle - 1
+        self.angle = self.angle - self.rotationSpeed
     end
 
     if KEY_D then
-        self.angle = self.angle + 1
+        self.angle = self.angle + self.rotationSpeed
     end
     
     if KEY_W then
@@ -89,5 +96,6 @@ function Player:printDebug()
     print("Y cord", self.y)
     print("X spd", self.xspd)
     print("Y spd", self.yspd)
-
+    print("invul", self.invul)
+    print("hp", self.hp)
 end

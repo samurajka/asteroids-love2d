@@ -16,7 +16,7 @@ function Wormhole:new(x,y,lifetime,cooldown)
     self.y = y
     self.lifetime = lifetime or Wormhole.lifetime
     self.cooldown = cooldown or Wormhole.cooldown
-    self.shape = generateAsteroidShape(30,5,15)
+    self.shape = generateAsteroidShape(10,5,15)
 end
 
 
