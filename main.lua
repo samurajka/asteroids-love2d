@@ -11,9 +11,14 @@ require "code.classes.enemy"
 require "code.classes.projectiles"
 require "code.classes.asteroid"
 require "code.classes.counter"
+require "code.classes.wormhole"
 
 DEBUGMODE = true
 debugtimer = 0
+
+
+
+
 
 function love.load()
     love.window.setMode(gw*4, gh*4, {display = 1, fullscreen = false, borderless = false})
@@ -44,6 +49,16 @@ function love.load()
     newAsteroid(2,200,200)
     newAsteroid(1,200,200)
 
+
+    newWormhole(70,70,3,60)
+
+
+
+    function tempFn()
+        newWormhole(love.math.random(50,gw-50),love.math.random(50,gh-50),3,60)
+    end
+    ticker1 = Ticker(180,tempFn) 
+
 end
 
 function love.update(dt)
@@ -57,6 +72,11 @@ function love.update(dt)
 
     updateTableObjects(ProjectileTable)
     updateTableObjects(AsteroidTable)
+    updateTableObjects(WormholeTable)
+
+    checkLifetime(WormholeTable)
+
+    ticker1:update()
 
     mainCounter:update()
 
@@ -79,6 +99,7 @@ function love.draw()
 
         drawTableObjects(ProjectileTable)
         drawTableObjects(AsteroidTable)
+        drawTableObjects(WormholeTable)
 
     love.graphics.setCanvas()
 

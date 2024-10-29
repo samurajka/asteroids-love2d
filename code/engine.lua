@@ -96,3 +96,28 @@ function teleportOffscreenObject(object)
     object.y = object.y + outOfBounds.y*gh
 end
 
+
+function checkLifetime(tb)
+    for index, value in ipairs(tb) do
+        if value.lifetime == 0 then table.remove(tb,index) end
+    end
+end
+
+
+Ticker = Object:extend()
+Ticker.limit = 60
+Ticker.frames = 0
+Ticker.fn = nil
+
+function Ticker:new(limit, fn)
+    self.limit = limit
+    self.fn = fn
+end
+
+function Ticker:update()
+    self.frames = self.frames + 1
+    if self.frames >= self.limit then
+        self.frames = 0
+        self.fn()
+    end
+end
